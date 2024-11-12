@@ -9,10 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-@Entity @Data @NoArgsConstructor @AllArgsConstructor @ToString
+@Entity @Data @NoArgsConstructor @AllArgsConstructor
 public class Product{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; private String name;private double price;
+    private Long id;
+    private String name;
+    private double price;
 
 }

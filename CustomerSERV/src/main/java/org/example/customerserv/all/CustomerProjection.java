@@ -1,5 +1,6 @@
 package org.example.customerserv.all;
 
+import org.example.customerserv.entity.Customer;
 import org.springframework.data.rest.core.config.Projection;
 
 @Projection(name = "fullCustomer",types = Customer.class)

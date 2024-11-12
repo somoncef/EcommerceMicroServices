@@ -1,4 +1,4 @@
-package org.example.customerserv.all;
+package org.example.customerserv.entity;
 
 
 import jakarta.persistence.Entity;
@@ -13,7 +13,9 @@ import lombok.ToString;
 @Entity @Data @NoArgsConstructor @AllArgsConstructor @ToString
 public class Customer {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; private String name; private String email;
+    private Long id;
+    private String name;
+    private String email;
 }
 
 
