@@ -1,11 +1,13 @@
 package org.example.inventoryserv;
 
-import org.example.inventoryserv.ALL.Product;
-import org.example.inventoryserv.ALL.ProductRepository;
+import org.example.inventoryserv.entity.Product;
+import org.example.inventoryserv.repository.ProductRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+
+import java.util.UUID;
 
 @SpringBootApplication
 public class InventoryServApplication {
@@ -14,12 +16,31 @@ public class InventoryServApplication {
     }
 
     @Bean
-    CommandLineRunner start(ProductRepository productRepository) {
+    CommandLineRunner commandLineRunner(ProductRepository productRepository){
         return args -> {
-            productRepository.save(new Product(null, "Computer Desk Top HP", 900));
-            productRepository.save(new Product(null, "Printer Epson", 80));
-            productRepository.save(new Product(null, "MacBook Pro Lap Top", 1800));
-            productRepository.findAll().forEach(System.out::println);
+            productRepository.save(Product.builder()
+                    .id(UUID.randomUUID().toString())
+                    .name("Computer")
+                    .price(3200)
+                    .quantity(11)
+                    .build());
+            productRepository.save(Product.builder()
+                    .id(UUID.randomUUID().toString())
+                    .name("Printer")
+                    .price(1299)
+                    .quantity(10)
+                    .build());
+            productRepository.save(Product.builder()
+                    .id(UUID.randomUUID().toString())
+                    .name("Smart Phone")
+                    .price(5400)
+                    .quantity(8)
+                    .build());
+
+            productRepository.findAll().forEach(p->{
+                System.out.println(p.toString());
+            });
         };
     }
+
 }

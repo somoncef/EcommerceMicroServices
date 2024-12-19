@@ -22,37 +22,39 @@ import java.util.Random;
 @EnableFeignClients
 @SpringBootApplication
 public class BillingServiceApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(BillingServiceApplication.class, args);
     }
     @Bean
-CommandLineRunner start(BillRepository billRepository,
-                        ProductItemRepository productItemRepository,
-                        CustomerRestClient customerRestClient,
-                        ProductRestClient productRestClient) {
-    return args -> {
-        Collection<Product> products = productRestClient.allProducts().getContent();
-        long customerId = 1;
-        Customer customer = customerRestClient.getCustomerById(customerId);
-        if (customer == null) throw new RuntimeException("Customer Not Found");
-        Bill bill = new Bill();
-        bill.setBillDate(new Date());
-        bill.setCustomerId(customerId);
-        Bill saved = billRepository.save(bill);
-        products.forEach(p -> {
-            if (p.getId() == null) {
-                System.err.println("Product ID is null for product: " + p);
-                return;
-            }
-            ProductItem productItem = new ProductItem();
-            productItem.setBill(saved);
-            productItem.setProductId(p.getId());
-            productItem.setQuantity(1 + new Random().nextInt(10));
-            productItem.setPrice(p.getPrice());
-            productItem.setDiscount(Math.random());
-            productItemRepository.save(productItem);
-        });
-    };
-}
+    CommandLineRunner commandLineRunner(BillRepository billRepository,
+                                        ProductItemRepository productItemRepository,
+                                        CustomerRestClient customerRestClient,
+                                        ProductRestClient productRestClient) {
+
+        return args -> {
+            Collection<Customer> customers = customerRestClient.getAllCustomers().getContent();
+            Collection<Product> products = productRestClient.getAllProducts().getContent();
+
+            customers.forEach(customer -> {
+                if (customer.getId() == null) {
+                    System.out.println("Customer ID is null for customer: {}"+customer);
+                    return;
+                }
+                Bill bill = Bill.builder()
+                        .billingDate(new Date())
+                        .customerId(customer.getId())
+                        .build();
+                billRepository.save(bill);
+                products.forEach(product -> {
+                    ProductItem productItem = ProductItem.builder()
+                            .bill(bill)
+                            .productId(product.getId())
+                            .quantity(1 + new Random().nextInt(10))
+                            .unitPrice(product.getPrice())
+                            .build();
+                    productItemRepository.save(productItem);
+                });
+            });
+        };
+    }
 }

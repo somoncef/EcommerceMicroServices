@@ -15,6 +15,9 @@
         <module name="BillingService" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="config-repo" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

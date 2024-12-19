@@ -7,5 +7,7 @@
     <file url="file://$PROJECT_DIR$/GatewayMICROSTP3/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InventorySERV/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PROPS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-repo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-repo/src/main/resources" charset="UTF-8" />
   </component>
 </project>

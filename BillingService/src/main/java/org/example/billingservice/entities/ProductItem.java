@@ -1,25 +1,21 @@
 package org.example.billingservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.billingservice.model.Product;
 
-@Entity @NoArgsConstructor
-@AllArgsConstructor
-@Builder @Data
+@Entity
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ProductItem {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long productId;
+    private Long id;
+    private String productId;
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Bill bill;
-    private double price;
-    private double quantity;
-    private double discount;
+    private int quantity;
+    private double unitPrice;
     @Transient
     private Product product;
-
 }
